@@ -5,11 +5,13 @@
 #pragma once
 
 #include <apl/types/detail/array_detail.hpp>
+#include <algorithm>
 #include <array>
 #include <concepts>
 #include <cstddef>
-#include <memory>
 #include <span>
+#include <tuple>
+#include <type_traits>
 #include <utility>
 
 namespace apl {
