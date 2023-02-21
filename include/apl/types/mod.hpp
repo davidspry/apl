@@ -13,7 +13,7 @@ namespace apl {
 
 //! @brief An unsigned-integer type that uses the modulo operator to ensure that the value stays within [0, LIMIT).
 
-template<std::size_t LIMIT, std::unsigned_integral unsigned_integral_type = std::uint32_t> requires (LIMIT > 0)
+template<std::size_t LIMIT, std::unsigned_integral unsigned_integral_type = std::size_t> requires (LIMIT > 0)
 class mod {
     static_assert(
             LIMIT <= std::numeric_limits<unsigned_integral_type>::max(),
