@@ -3,8 +3,11 @@
 //
 
 #include "array_tests.hpp"
+#include "mod_tests.hpp"
+#include "mwmr_circular_queue_test.hpp"
+#include "range_tests.hpp"
+#include "seqlock_tests.hpp"
 #include "thread_group_tests.hpp"
-
 #include <gtest/gtest.h>
 
 auto main(int argc, char** argv) -> int {

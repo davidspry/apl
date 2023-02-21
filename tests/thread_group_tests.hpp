@@ -15,30 +15,35 @@ namespace apl {
 
 TEST(thread_group, initialise_default) {
     const auto thread_group = apl::thread_group<1>{};
-    ASSERT_FALSE(thread_group.has_pending_tasks());
+    ASSERT_FALSE(thread_group.is_busy());
 }
 
 TEST(thread_group, submit_task) {
     constexpr static auto new_task = []() {};
-    auto thread_group = apl::thread_group<1, 250>{};
+    auto thread_group = apl::thread_group<1, 256>{};
     thread_group.submit_task(new_task);
     thread_group.submit_task(new_task);
-    ASSERT_TRUE(thread_group.has_pending_tasks());
+    thread_group.submit_task(new_task);
+    ASSERT_TRUE(thread_group.is_busy());
 }
 
 TEST(thread_group, perform_tasks) {
     std::atomic<std::size_t> count{0};
-    auto add_one = [&count]() { count.fetch_add(1); };
-    auto thread_group = apl::thread_group<4, 5>{};
+    auto thread_group = apl::thread_group<4, 0>{};
 
     constexpr static auto desired_count = 4;
     for (auto i = 0; i < desired_count; ++i) {
-        thread_group.submit_task(add_one);
+        if (!thread_group.submit_task([&count]() {
+            count.fetch_add(1);
+        })) {
+            FAIL();
+        }
     }
 
-    while (thread_group.has_active_tasks() or
-           thread_group.has_pending_tasks()) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+    while (thread_group.is_busy()) {
+        std::this_thread::sleep_for(
+                std::chrono::milliseconds(1)
+        );
     }
 
     ASSERT_EQ(count.load(), desired_count);

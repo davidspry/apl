@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <apl/types/detail/common.hpp>
 #include <concepts>
 #include <iterator>
 
@@ -18,8 +19,5 @@ concept iterable = requires(const value_type& type) {
     { std::end(type) };
     { std::size(type) };
 };
-
-template<typename value_type, typename decay_type>
-concept decays_to = std::same_as<typename std::decay_t<value_type>, decay_type>;
 
 }

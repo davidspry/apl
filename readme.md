@@ -62,10 +62,89 @@ auto prefix = apl::array<int, 6>::prefixing(source); //! [1, 2, 3, 0, 0, 0]
 auto repeat = apl::array<int, 6>::repeating(source); //! [1, 2, 3, 1, 2, 3]
 ```
 ---
+# mod
+
+A number whose value is computed using the modulo operation with respect to a predefined limit.
+
+## usage
+```cpp
+constexpr auto limit = 7uz;
+auto m = apl::mod<limit>{};
+
+for (auto i = 0; i < 128; ++i) {
+    assert((++m).value() < limit);
+}
+```
+---
+# mwmr_circular_queue
+
+A circular queue supporting multiple writers and multiple readers.
+
+## usage
+```cpp
+constexpr auto limit = 64;
+using value_type = std::string;
+auto mwmr = mwmr_circular_queue<value_type, limit>{};
+
+for (auto i = 0; i < limit; ++i) {
+    const auto did_push = mwmr.push(
+            fmt::format("{}", i)
+    );
+    
+    assert(did_push);
+}
+
+for (auto i = 0; i < limit; ++i) {
+    const auto opt_value = mwmr.pop();
+    
+    assert(
+        opt_value.has_value() &&
+        opt_value.value() == fmt::format("{}", i)
+    );
+}
+```
+---
+# range
+
+An iterable, half-open range over the integers.
+
+## usage
+```cpp
+for (auto i: apl::range<0, 5>{}) {
+    //! [0, 1, 2, 3, 4]
+}
+
+for (auto i: apl::range<0, 5>::reversed{}) {
+    //! [4, 3, 2, 1, 0]
+}
+
+for (auto i: apl::range<0, 9>::step_by<3>{}) {
+    //! [0, 3, 6]
+}
+
+for (auto i: apl::range<0, 5>::drop_prefix<3>::reversed{}) {
+    //! [4, 3]
+}
+```
+---
+# seqlock
+
+A thread-safe object-wrapper based on the 'seqlock' spin-lock algorithm, which supports multiple writers and multiple readers.
+
+## usage
+```cpp
+auto locked = apl::seqlock<std::string_view>{};
+locked.store("value");
+assert(
+    locked.load() == std::string_view("value")
+);
+```
+---
 # thread group
 
 A group of threads that each execute pending tasks.
 
+## usage
 ```cpp
 //! Four threads, 125ms wait-interval between units of work.
 auto thread_group = apl::thread_group<4, 125>{};
@@ -77,8 +156,7 @@ for (auto i = 0; i < n; ++i) {
     });
 }
 
-while (thread_group.has_active_tasks() or
-       thread_group.has_pending_tasks()) {
+while (thread_group.is_busy()) {
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
 }
 

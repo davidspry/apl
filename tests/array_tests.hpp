@@ -10,10 +10,11 @@
 #include <array>
 #include <gtest/gtest.h>
 #include <numeric>
+#include <ranges>
 #include <span>
 #include <vector>
 
-namespace apl {
+namespace apl::test {
 
 TEST(array, initialise_default) {
     constexpr static auto array_size = 4;
@@ -291,12 +292,15 @@ TEST(array, reverse_iterator) {
     constexpr static auto array_size = 5;
     constexpr auto array = apl::array<int, array_size>::prefixing(1, 2, 3, 4, 5);
 
-    for (auto i = array.rbegin(); i != array.rend(); ++i) {
+    for (auto i: std::views::reverse(array)) {
         static auto expected_value = array_size;
-        ASSERT_EQ(*i, expected_value--);
+        ASSERT_EQ(i, expected_value--);
     }
 
-    ASSERT_EQ(5 + 4 + 3 + 2 + 1, std::accumulate(array.rbegin(), array.rend(), 0));
+    const auto reversed_elements = std::views::iota(1, array_size + 1) | std::views::reverse;
+
+    ASSERT_EQ(std::accumulate(reversed_elements.begin(), reversed_elements.end(), 0),
+              std::accumulate(array.rbegin(), array.rend(), 0));
 }
 
 }

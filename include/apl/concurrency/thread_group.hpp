@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <apl/concurrency/seqlock.hpp>
+#include <apl/types/mwmr_circular_queue.hpp>
 #include <array>
 #include <atomic>
 #include <chrono>
@@ -14,11 +16,14 @@
 #include <thread>
 #include <utility>
 
+#include <fmt/format.h>
+
 namespace apl {
 
 //! @brief A group of threads that each execute pending tasks.
 //! @tparam NUMBER_OF_THREADS The number of threads to create.
 //! @tparam WAIT_TIME_IN_MS The amount of time, in milliseconds, for which each thread should sleep between tasks.
+//! @note The maximum number of concurrent tasks is 64.
 
 template<std::size_t NUMBER_OF_THREADS, std::size_t WAIT_TIME_IN_MS = 250uz> requires (NUMBER_OF_THREADS > 0uz)
 class thread_group final {
@@ -29,7 +34,7 @@ public:
         m_is_running.store(true);
         for (auto i = 0uz; i < NUMBER_OF_THREADS; ++i) {
             m_threads[i] = std::thread([this, i]() {
-                run(i + 1);
+                run(i);
             });
         }
     }
@@ -41,48 +46,44 @@ public:
         });
     }
 
-    bool has_active_tasks() const {
-        return m_active_tasks.load() > 0;
+    auto is_busy() const -> bool {
+        return m_queued_tasks.load(std::memory_order::acquire) > 0;
     }
 
-    bool has_pending_tasks() const {
-        const std::scoped_lock scoped_lock{m_tasks_lock};
-        return !m_pending_tasks.empty();
-    }
+    auto submit_task(task_type&& new_task) -> bool {
+        if (!m_pending_tasks.push(std::move(new_task))) {
+            return false;
+        }
 
-    void submit_task(task_type&& new_task) {
-        const std::scoped_lock scoped_lock{m_tasks_lock};
-        m_pending_tasks.emplace(std::move(new_task));
+        m_queued_tasks.fetch_add(1, std::memory_order::release);
+        return true;
     }
 
 private:
-    auto get_next_task() -> task_type {
-        const std::scoped_lock scoped_lock{m_tasks_lock};
-        auto next_task = std::move(m_pending_tasks.front());
-        m_pending_tasks.pop();
-        return next_task;
+    auto get_next_task() -> std::optional<task_type> {
+        return m_pending_tasks.pop();
     }
 
     void run([[maybe_unused]] const std::size_t thread_id) {
         constexpr static auto wait_time = std::chrono::milliseconds(WAIT_TIME_IN_MS);
 
-        while (m_is_running.load()) {
-            if (has_pending_tasks()) {
-                m_active_tasks.fetch_add(1);
-                std::invoke(get_next_task());
-                m_active_tasks.fetch_sub(1);
+        while (m_is_running.load(std::memory_order::relaxed)) {
+            if (const auto next_task = get_next_task(); next_task.has_value()) {
+                std::invoke(next_task.value());
+                m_queued_tasks.fetch_sub(1, std::memory_order::release);
             }
 
-            std::this_thread::sleep_for(wait_time);
+            if constexpr (WAIT_TIME_IN_MS > 0) {
+                std::this_thread::sleep_for(wait_time);
+            }
         }
     }
 
 private:
     std::atomic<bool> m_is_running{false};
-    std::atomic<std::size_t> m_active_tasks{0};
+    std::atomic<std::size_t> m_queued_tasks{0};
     std::array<std::thread, NUMBER_OF_THREADS> m_threads;
-    std::queue<task_type> m_pending_tasks;
-    mutable std::mutex m_tasks_lock;
+    apl::mwmr_circular_queue<task_type, 64> m_pending_tasks;
 };
 
 }

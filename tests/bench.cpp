@@ -3,6 +3,8 @@
 //
 
 #include "array_bench.hpp"
+#include "mod_bench.hpp"
+#include "seqlock_bench.hpp"
 
 #include <benchmark/benchmark.h>
 

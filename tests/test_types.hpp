@@ -8,15 +8,15 @@
 
 namespace apl::detail {
 struct pod_type {
-    int value1 {0};
-    int value2 {0};
-    std::string_view value3 {"0"};
+    int value1{0};
+    int value2{0};
+    std::string_view value3{"0"};
 };
 
 struct copyable {
-    int value1 {0};
-    int value2 {0};
-    std::string_view value3 {"0"};
+    int value1{0};
+    int value2{0};
+    std::string_view value3{"0"};
 
     constexpr copyable() = default;
     constexpr copyable(const int value1,
@@ -30,9 +30,9 @@ struct copyable {
 };
 
 struct noncopyable {
-    int value1 {0};
-    int value2 {0};
-    std::string_view value3 {"0"};
+    int value1{0};
+    int value2{0};
+    std::string_view value3{"0"};
 
     constexpr noncopyable() = default;
     constexpr noncopyable(const int value1,
