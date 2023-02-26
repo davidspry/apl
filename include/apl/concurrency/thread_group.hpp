@@ -5,7 +5,7 @@
 #pragma once
 
 #include <apl/concurrency/seqlock.hpp>
-#include <apl/types/mwmr_circular_queue.hpp>
+#include <apl/types/mwmr_queue.hpp>
 #include <array>
 #include <atomic>
 #include <chrono>
@@ -83,7 +83,7 @@ private:
     std::atomic<bool> m_is_running{false};
     std::atomic<std::size_t> m_queued_tasks{0};
     std::array<std::thread, NUMBER_OF_THREADS> m_threads;
-    apl::mwmr_circular_queue<task_type, 64> m_pending_tasks;
+    apl::mwmr_queue<task_type, 64> m_pending_tasks;
 };
 
 }

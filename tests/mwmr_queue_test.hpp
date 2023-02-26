@@ -6,14 +6,14 @@
 
 #include "test_types.hpp"
 
-#include <apl/types/mwmr_circular_queue.hpp>
+#include <apl/types/mwmr_queue.hpp>
 #include <gtest/gtest.h>
 
 namespace apl::test {
 
-TEST(mwmr_circular_queue, push_until_full) {
+TEST(mwmr_queue, push_until_full) {
     constexpr auto limit = 128u;
-    auto mwmr = mwmr_circular_queue<detail::copyable, limit>{};
+    auto mwmr = mwmr_queue<detail::copyable, limit>{};
 
     for (auto i = 0; i < limit; ++i) {
         ASSERT_TRUE(
@@ -30,9 +30,9 @@ TEST(mwmr_circular_queue, push_until_full) {
     );
 }
 
-TEST(mwmr_circular_queue, pop_until_empty) {
+TEST(mwmr_queue, pop_until_empty) {
     constexpr auto limit = 256u;
-    auto mwmr = mwmr_circular_queue<detail::copyable, limit>{};
+    auto mwmr = mwmr_queue<detail::copyable, limit>{};
 
     for (auto i = 0; i < limit; ++i) {
         mwmr.push(

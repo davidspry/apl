@@ -18,7 +18,7 @@ concept assignable = std::is_copy_assignable<value_type>::value ||
                      std::is_move_assignable<value_type>::value;
 
 template<assignable value_type, std::size_t CAPACITY> requires (std::has_single_bit(CAPACITY))
-class mwmr_circular_queue {
+class mwmr_queue {
     template<typename underlying_type>
     struct occupiable {
         std::atomic_flag is_occupied{false};
@@ -31,7 +31,7 @@ class mwmr_circular_queue {
     const std::size_t m_array_bounds_mask = CAPACITY - 1;
 
 public:
-    constexpr mwmr_circular_queue() = default;
+    constexpr mwmr_queue() = default;
 
     template<detail::decays_to<value_type> value_type_instance>
     constexpr auto push(value_type_instance&& value) -> bool {

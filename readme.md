@@ -76,7 +76,7 @@ for (auto i = 0; i < 128; ++i) {
 }
 ```
 ---
-# mwmr_circular_queue
+# mwmr_queue
 
 A circular queue supporting multiple writers and multiple readers.
 
@@ -84,7 +84,7 @@ A circular queue supporting multiple writers and multiple readers.
 ```cpp
 constexpr auto limit = 64;
 using value_type = std::string;
-auto mwmr = mwmr_circular_queue<value_type, limit>{};
+auto mwmr = mwmr_queue<value_type, limit>{};
 
 for (auto i = 0; i < limit; ++i) {
     const auto did_push = mwmr.push(
