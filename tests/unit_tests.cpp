@@ -3,6 +3,7 @@
 //
 
 #include "array_tests.hpp"
+#include "cexlock_tests.hpp"
 #include "mod_tests.hpp"
 #include "mwmr_queue_test.hpp"
 #include "range_tests.hpp"
