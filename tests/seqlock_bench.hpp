@@ -32,8 +32,9 @@ BENCHMARK_TEMPLATE_F(seqlock, store_rvalue, detail::pod_type)(benchmark::State& 
 }
 
 BENCHMARK_TEMPLATE_F(seqlock, read, detail::pod_type)(benchmark::State& state) {
+    auto loaded_value = detail::pod_type{};
     while (state.KeepRunning()) {
-        benchmark::DoNotOptimize(seqlock.load());
+        benchmark::DoNotOptimize(seqlock.load(loaded_value));
     }
 }
 
