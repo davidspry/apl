@@ -44,7 +44,7 @@ TEST(random, initialise_from_different_seeds) {
     for (auto i = 0uz; i < 128uz; ++i) {
         const auto random1 = apl::random{i + 1};
         const auto random2 = apl::random{i + 2};
-        for (auto i = 0uz; i < 32uz; ++i) {
+        for (auto k = 0uz; k < 32uz; ++k) {
             ASSERT_NE(
                     std::make_tuple(
                             random1(),
