@@ -61,8 +61,10 @@ public:
     constexpr auto operator=(const cexlock&) = delete;
     constexpr auto operator=(const cexlock&&) noexcept = delete;
 
-    //! Copy the underlying value.
+    //! Temporarily obtain exclusive access in order to copy
+    //! the underlying value.
     constexpr auto copy_read() -> value_type requires std::is_trivially_copyable<value_type>::value {
+        const auto locked = lock_read();
         value_type value;
         std::memcpy(&value, m_value.get(), sizeof(value_type));
         return value;

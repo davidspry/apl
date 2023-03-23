@@ -27,6 +27,17 @@ TEST(cexlock, initialise_with_value) {
     ASSERT_STREQ(reader->data(), "string");
 }
 
+TEST(cexlock, copy_read) {
+    constexpr auto value = std::string_view{"string"};
+    auto locked = apl::cexlock<std::string_view>{value};
+    auto copied = locked.copy_read();
+    auto reader = locked.lock_read();
+
+    ASSERT_EQ(value, copied);
+    ASSERT_FALSE(reader.is_null());
+    ASSERT_STREQ(reader->data(), "string");
+}
+
 TEST(cexlock, lock_read) {
     constexpr auto value = 32uz;
     auto locked = apl::cexlock<std::size_t>{value};
