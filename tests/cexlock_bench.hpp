@@ -16,6 +16,14 @@ struct cexlock: benchmark::Fixture {
     apl::cexlock<value_type> cexlock{};
 };
 
+BENCHMARK_TEMPLATE_F(cexlock, copy_read, detail::pod_type)(benchmark::State& state) {
+    while (state.KeepRunning()) {
+        benchmark::DoNotOptimize(
+                cexlock.copy_read()
+        );
+    }
+}
+
 BENCHMARK_TEMPLATE_F(cexlock, lock_read, detail::pod_type)(benchmark::State& state) {
     while (state.KeepRunning()) {
         benchmark::DoNotOptimize(
