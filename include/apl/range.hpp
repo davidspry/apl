@@ -5,7 +5,7 @@
 #pragma once
 
 #include <algorithm>
-#include <apl/types/detail/range_detail.hpp>
+#include <apl/detail/range_detail.hpp>
 #include <concepts>
 #include <fmt/format.h>
 #include <iterator>

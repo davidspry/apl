@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <apl/types/range.hpp>
+#include <apl/range.hpp>
 #include <concepts>
 #include <limits>
 #include <iterator>

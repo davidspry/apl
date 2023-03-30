@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <apl/types/detail/common.hpp>
+#include <apl/detail/common.hpp>
 #include <concepts>
 #include <iterator>
 

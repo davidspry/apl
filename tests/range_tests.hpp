@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/types/range.hpp>
+#include <apl/range.hpp>
 #include <fmt/format.h>
 #include <gtest/gtest.h>
 #include <numeric>

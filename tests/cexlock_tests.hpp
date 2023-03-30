@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/concurrency/cexlock.hpp>
+#include <apl/cexlock.hpp>
 #include <cstddef>
 #include <gtest/gtest.h>
 #include <string_view>

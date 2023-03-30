@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <apl/types/detail/array_detail.hpp>
 #include <algorithm>
+#include <apl/detail/array_detail.hpp>
 #include <array>
 #include <concepts>
 #include <cstddef>
@@ -22,7 +22,6 @@ namespace apl {
 
 template<typename value_type, std::size_t NUMBER_OF_ELEMENTS> requires (NUMBER_OF_ELEMENTS > 0)
 class array final {
-private:
     using array_type = std::array<value_type, NUMBER_OF_ELEMENTS>;
 
     enum class construct_by {

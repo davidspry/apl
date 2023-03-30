@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <apl/types/detail/common.hpp>
+#include <apl/detail/mwmr_queue_detail.hpp>
 #include <array>
 #include <atomic>
 #include <bit>

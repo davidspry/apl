@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/concurrency/seqlock.hpp>
+#include <apl/seqlock.hpp>
 #include <gtest/gtest.h>
 #include <string_view>
 

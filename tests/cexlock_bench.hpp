@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/concurrency/cexlock.hpp>
+#include <apl/cexlock.hpp>
 #include <benchmark/benchmark.h>
 
 namespace apl::test {

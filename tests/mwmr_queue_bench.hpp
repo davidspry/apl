@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/types/mwmr_queue.hpp>
+#include <apl/mwmr_queue.hpp>
 #include <benchmark/benchmark.h>
 #include <cstddef>
 #include <string>

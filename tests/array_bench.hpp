@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/types/array.hpp>
+#include <apl/array.hpp>
 #include <array>
 #include <benchmark/benchmark.h>
 #include <cstddef>

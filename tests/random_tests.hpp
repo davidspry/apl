@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/types/random.hpp>
+#include <apl/random.hpp>
 #include <cstddef>
 #include <gtest/gtest.h>
 #include <ranges>

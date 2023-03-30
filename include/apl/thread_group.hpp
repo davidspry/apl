@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <apl/concurrency/seqlock.hpp>
-#include <apl/types/mwmr_queue.hpp>
+#include <apl/seqlock.hpp>
+#include <apl/mwmr_queue.hpp>
 #include <array>
 #include <atomic>
 #include <chrono>
@@ -15,8 +15,6 @@
 #include <queue>
 #include <thread>
 #include <utility>
-
-#include <fmt/format.h>
 
 namespace apl {
 

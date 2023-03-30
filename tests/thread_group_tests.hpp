@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/concurrency/thread_group.hpp>
+#include <apl/thread_group.hpp>
 #include <atomic>
 #include <gtest/gtest.h>
 #include <thread>
