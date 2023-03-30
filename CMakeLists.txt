@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(apl LANGUAGES CXX)
+project(apl VERSION 0.1.0 LANGUAGES CXX)
 set(target ${PROJECT_NAME})
 
 add_library(${target} INTERFACE)

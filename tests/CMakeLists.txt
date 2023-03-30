@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(apl_tests LANGUAGES CXX)
+project(apl_tests VERSION 0.1.0 LANGUAGES CXX)
 set(tests_target apl_tests)
 set(bench_target apl_bench)
 
