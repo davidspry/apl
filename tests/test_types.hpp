@@ -11,6 +11,7 @@ struct pod_type {
     int value1{0};
     int value2{0};
     std::string_view value3{"0"};
+    constexpr bool operator==(const pod_type&) const = default;
 };
 
 struct copyable {

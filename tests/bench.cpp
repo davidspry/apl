@@ -4,6 +4,7 @@
 
 #include "array_bench.hpp"
 #include "cexlock_bench.hpp"
+#include "double_buffer_bench.hpp"
 #include "mod_bench.hpp"
 #include "mwmr_queue_bench.hpp"
 #include "random_bench.hpp"
