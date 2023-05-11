@@ -21,9 +21,9 @@ template<std::int64_t LOWER_BOUND,
 struct range {
     //! MARK: Public Interface
 
-    constexpr static auto size() -> std::size_t { return UPPER_BOUND - LOWER_BOUND; }
-    constexpr static auto lower_bound() { return LOWER_BOUND; }
-    constexpr static auto upper_bound() { return UPPER_BOUND; }
+    consteval static auto size() -> std::size_t { return UPPER_BOUND - LOWER_BOUND; }
+    consteval static auto lower_bound() { return LOWER_BOUND; }
+    consteval static auto upper_bound() { return UPPER_BOUND; }
 
     constexpr static auto contains(std::integral auto value) -> bool {
         return LOWER_BOUND <= value && value < UPPER_BOUND;
@@ -61,7 +61,7 @@ struct range {
 
     template<std::size_t INDEX>
     requires (INDEX < size())
-    constexpr static auto get() {
+    consteval static auto get() {
         return LOWER_BOUND + INDEX;
     }
 
