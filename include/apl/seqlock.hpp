@@ -60,7 +60,7 @@ public:
         return true;
     }
 
-    constexpr auto store(const value_type& value) {
+    constexpr auto store(const value_type value) {
         m_sequence_number.fetch_add(1, std::memory_order::relaxed);
         std::atomic_thread_fence(std::memory_order::release);
         std::memcpy(&m_value, &value, sizeof(value_type));
