@@ -12,6 +12,7 @@
 #include "range_tests.hpp"
 #include "seqlock_tests.hpp"
 #include "shared_tests.hpp"
+#include "swsr_queue_test.hpp"
 #include "thread_group_tests.hpp"
 #include <gtest/gtest.h>
 

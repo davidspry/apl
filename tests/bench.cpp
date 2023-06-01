@@ -9,6 +9,7 @@
 #include "mwmr_queue_bench.hpp"
 #include "random_bench.hpp"
 #include "seqlock_bench.hpp"
+#include "swsr_queue_bench.hpp"
 
 #include <benchmark/benchmark.h>
 
