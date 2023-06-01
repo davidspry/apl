@@ -24,7 +24,7 @@ class mwmr_queue {
     std::array<occupiable<value_type>, CAPACITY> m_array;
     std::atomic<std::size_t> m_enqueue_index{0};
     std::atomic<std::size_t> m_dequeue_index{0};
-    const std::size_t m_array_bounds_mask = CAPACITY - 1;
+    static constexpr std::size_t m_array_bounds_mask = CAPACITY - 1;
 
 public:
     constexpr mwmr_queue() = default;
