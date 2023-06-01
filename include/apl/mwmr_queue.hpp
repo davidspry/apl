@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <apl/detail/mwmr_queue_detail.hpp>
+#include <apl/detail/common.hpp>
 #include <array>
 #include <atomic>
 #include <bit>
@@ -13,11 +13,7 @@
 
 namespace apl {
 
-template<typename value_type>
-concept assignable = std::is_copy_assignable<value_type>::value ||
-                     std::is_move_assignable<value_type>::value;
-
-template<assignable value_type, std::size_t CAPACITY> requires (std::has_single_bit(CAPACITY))
+template<detail::assignable value_type, std::size_t CAPACITY> requires (std::has_single_bit(CAPACITY))
 class mwmr_queue {
     template<typename underlying_type>
     struct occupiable {
