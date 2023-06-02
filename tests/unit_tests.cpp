@@ -14,6 +14,8 @@
 #include "shared_tests.hpp"
 #include "swsr_queue_test.hpp"
 #include "thread_group_tests.hpp"
+#include "utility_tests.hpp"
+
 #include <gtest/gtest.h>
 
 auto main(int argc, char** argv) -> int {
