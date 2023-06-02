@@ -65,14 +65,16 @@ public:
 
     //! MARK: - Conversion Operators
 
-    [[nodiscard]] constexpr explicit operator int() { return static_cast<int>(m_value); }
-    [[nodiscard]] constexpr explicit operator long() { return static_cast<long>(m_value); }
-    [[nodiscard]] constexpr explicit operator long long() { return static_cast<long long>(m_value); }
-    [[nodiscard]] constexpr explicit operator unsigned() { return static_cast<unsigned>(m_value); }
-    [[nodiscard]] constexpr explicit operator unsigned long() { return static_cast<unsigned long>(m_value); }
+    //! @formatter:off
+    [[nodiscard]] constexpr explicit operator int()                { return static_cast<int>(m_value); }
+    [[nodiscard]] constexpr explicit operator long()               { return static_cast<long>(m_value); }
+    [[nodiscard]] constexpr explicit operator long long()          { return static_cast<long long>(m_value); }
+    [[nodiscard]] constexpr explicit operator unsigned()           { return static_cast<unsigned>(m_value); }
+    [[nodiscard]] constexpr explicit operator unsigned long()      { return static_cast<unsigned long>(m_value); }
     [[nodiscard]] constexpr explicit operator unsigned long long() { return static_cast<unsigned long long>(m_value); }
-    [[nodiscard]] constexpr explicit operator float() { return static_cast<float>(m_value); }
-    [[nodiscard]] constexpr explicit operator double() { return static_cast<double>(m_value); }
+    [[nodiscard]] constexpr explicit operator float()              { return static_cast<float>(m_value); }
+    [[nodiscard]] constexpr explicit operator double()             { return static_cast<double>(m_value); }
+    //! @formatter:on
 
     //! MARK: - Assignment
 
@@ -190,11 +192,12 @@ public:
 
     //! MARK: - Iterators
 
-    constexpr auto begin() const { return range<0, LIMIT>{}.begin(); }
-    constexpr auto end() const { return range<0, LIMIT>{}.end(); }
-
+    //! @formatter:off
+    constexpr auto begin() const  { return range<0, LIMIT>{}.begin(); }
+    constexpr auto end() const    { return range<0, LIMIT>{}.end(); }
     constexpr auto rbegin() const { return (typename range<0, LIMIT>::reversed()).begin(); }
-    constexpr auto rend() const { return (typename range<0, LIMIT>::reversed()).end(); }
+    constexpr auto rend() const   { return (typename range<0, LIMIT>::reversed()).end(); }
+    //! @formatter:on
 };
 
 //! MARK: Aliases
