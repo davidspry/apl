@@ -22,6 +22,14 @@ class mod {
 
     unsigned_integral_type m_value;
 
+    static constexpr auto wrap(const unsigned_integral_type value) {
+        if constexpr (std::has_single_bit(LIMIT)) {
+            return value & (LIMIT - 1);
+        } else {
+            return value % LIMIT;
+        }
+    }
+
 public:
     constexpr mod(const mod&) = default;
     constexpr mod(mod&&) noexcept = default;
@@ -29,7 +37,7 @@ public:
     constexpr mod& operator=(mod&&) noexcept = default;
 
     constexpr explicit mod() = default;
-    constexpr explicit mod(const unsigned_integral_type value): m_value(value % LIMIT) {}
+    constexpr explicit mod(const unsigned_integral_type value): m_value(wrap(value)) {}
 
     //! MARK: - Public Interface
 
@@ -69,38 +77,38 @@ public:
     //! MARK: - Assignment
 
     constexpr auto operator=(const unsigned_integral_type value) -> mod& {
-        m_value = value % LIMIT;
+        m_value = wrap(value);
         return *this;
     }
 
     //! MARK: - Increment/Decrement Operators
 
     constexpr auto operator++() -> mod {
-        m_value = (m_value + 1) % LIMIT;
+        m_value = wrap(m_value + 1);
         return mod(m_value);
     }
 
     constexpr auto operator++([[maybe_unused]] int) -> mod {
         const unsigned_integral_type value = m_value;
-        m_value = (m_value + 1) % LIMIT;
+        m_value = wrap(m_value + 1);
         return mod(value);
     }
 
     constexpr auto operator--() -> mod {
-        m_value = (m_value + LIMIT - 1) % LIMIT;
+        m_value = wrap(m_value + LIMIT - 1);
         return mod(m_value);
     }
 
     constexpr auto operator--([[maybe_unused]] int) -> mod {
         const unsigned_integral_type value = m_value;
-        m_value = (m_value + LIMIT - 1) % LIMIT;
+        m_value = wrap(m_value + LIMIT - 1);
         return mod(value);
     }
 
     //! MARK: - Arithmetic Operators
 
     constexpr auto operator+(std::unsigned_integral auto other_value) -> mod {
-        return mod((m_value + other_value) % LIMIT);
+        return mod(m_value + other_value);
     }
 
     constexpr auto operator+=(std::unsigned_integral auto other_value) -> mod& {
@@ -109,7 +117,7 @@ public:
     }
 
     constexpr auto operator-(std::unsigned_integral auto other_value) -> mod {
-        return mod(m_value - (other_value % LIMIT) + LIMIT);
+        return mod(m_value - wrap(other_value) + LIMIT);
     }
 
     constexpr auto operator-=(std::unsigned_integral auto other_value) -> mod& {
@@ -118,7 +126,7 @@ public:
     }
 
     constexpr auto operator*(std::unsigned_integral auto other_value) -> mod {
-        return mod((m_value * other_value) % LIMIT);
+        return mod(m_value * other_value);
     }
 
     constexpr auto operator*=(std::unsigned_integral auto other_value) -> mod& {
@@ -136,7 +144,7 @@ public:
     }
 
     constexpr auto operator<<(std::unsigned_integral auto other_value) -> mod {
-        return mod((m_value << other_value) % LIMIT);
+        return mod(m_value << other_value);
     }
 
     constexpr auto operator<<=(std::unsigned_integral auto other_value) -> mod& {
@@ -145,7 +153,7 @@ public:
     }
 
     constexpr auto operator>>(std::unsigned_integral auto other_value) -> mod {
-        return mod((m_value >> other_value) % LIMIT);
+        return mod(m_value >> other_value);
     }
 
     constexpr auto operator>>=(std::unsigned_integral auto other_value) -> mod& {
@@ -154,7 +162,7 @@ public:
     }
 
     constexpr auto operator&(std::unsigned_integral auto other_value) -> mod {
-        return mod((m_value & other_value) % LIMIT);
+        return mod(m_value & other_value);
     }
 
     constexpr auto operator&=(std::unsigned_integral auto other_value) -> mod& {
@@ -163,7 +171,7 @@ public:
     }
 
     constexpr auto operator|(std::unsigned_integral auto other_value) -> mod {
-        return mod((m_value | other_value) % LIMIT);
+        return mod(m_value | other_value);
     }
 
     constexpr auto operator|=(std::unsigned_integral auto other_value) -> mod& {
@@ -172,7 +180,7 @@ public:
     }
 
     constexpr auto operator^(std::unsigned_integral auto other_value) -> mod {
-        return mod((m_value ^ other_value) % LIMIT);
+        return mod(m_value ^ other_value);
     }
 
     constexpr auto operator^=(std::unsigned_integral auto other_value) -> mod& {
