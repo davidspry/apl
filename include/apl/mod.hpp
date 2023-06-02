@@ -31,7 +31,7 @@ public:
     constexpr explicit mod() = default;
     constexpr explicit mod(const unsigned_integral_type value): m_value(value % LIMIT) {}
 
-    //! MARK: Public Interface
+    //! MARK: - Public Interface
 
     [[nodiscard]] constexpr unsigned_integral_type value() const { return m_value; }
 
@@ -55,7 +55,7 @@ public:
         return this->operator-(delta);
     }
 
-    //! MARK: Conversion Operators
+    //! MARK: - Conversion Operators
 
     [[nodiscard]] constexpr explicit operator int() { return static_cast<int>(m_value); }
     [[nodiscard]] constexpr explicit operator long() { return static_cast<long>(m_value); }
@@ -66,14 +66,14 @@ public:
     [[nodiscard]] constexpr explicit operator float() { return static_cast<float>(m_value); }
     [[nodiscard]] constexpr explicit operator double() { return static_cast<double>(m_value); }
 
-    //! MARK: Assignment
+    //! MARK: - Assignment
 
     constexpr auto operator=(const unsigned_integral_type value) -> mod& {
         m_value = value % LIMIT;
         return *this;
     }
 
-    //! MARK: Increment/Decrement Operators
+    //! MARK: - Increment/Decrement Operators
 
     constexpr auto operator++() -> mod {
         m_value = (m_value + 1) % LIMIT;
@@ -97,7 +97,7 @@ public:
         return mod(value);
     }
 
-    //! MARK: Arithmetic Operators
+    //! MARK: - Arithmetic Operators
 
     constexpr auto operator+(std::unsigned_integral auto other_value) -> mod {
         return mod((m_value + other_value) % LIMIT);
@@ -180,7 +180,7 @@ public:
         return *this;
     }
 
-    //! MARK: Iterators
+    //! MARK: - Iterators
 
     constexpr auto begin() const { return range<0, LIMIT>{}.begin(); }
     constexpr auto end() const { return range<0, LIMIT>{}.end(); }
