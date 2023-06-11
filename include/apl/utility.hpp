@@ -21,9 +21,20 @@ constexpr void constexpr_for_each(const loop_body_fn loop_body) {
     (loop_body.template operator()<T>(), ...);
 }
 
-template<typename... T, class loop_body_fn>
+template<class... T, class loop_body_fn>
 constexpr void constexpr_for_each(const loop_body_fn loop_body) {
     (loop_body.template operator()<T>(), ...);
+}
+
+template<class fn, class... args> requires std::is_invocable_r_v<void, fn, args...>
+constexpr void invoke_once(fn&& invocable, args&& ... arguments) {
+    [[maybe_unused]] static auto _ = [
+        &invocable,
+        ...arguments = std::forward<args>(arguments)
+    ] {
+        std::invoke(invocable, arguments...);
+        return true;
+    }();
 }
 
 }

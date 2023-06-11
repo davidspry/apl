@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include "test_types.hpp"
-
 #include <apl/utility.hpp>
 #include <concepts>
 #include <cstddef>
@@ -44,6 +42,18 @@ TEST(utility, constexpr_for_each_type_parameter) {
                  std::same_as<T, bool>)
             );
         });
+}
+
+TEST(utility, invoke_once_single_thread) {
+    auto invocation_index = std::size_t{0};
+
+    for (auto i = 0; i < 8; ++i) {
+        apl::invoke_once([&invocation_index] {
+            invocation_index += 1;
+        });
+    }
+
+    ASSERT_EQ(invocation_index, 1uz);
 }
 
 }
