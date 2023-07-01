@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "test_types.hpp"
+#include "../test/test_types.hpp"
 
 #include <apl/mod.hpp>
 #include <benchmark/benchmark.h>
@@ -18,7 +18,7 @@ struct mod: benchmark::Fixture {
 };
 
 BENCHMARK_TEMPLATE_F(mod, addition, 128, std::uint64_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod + 3u
         );
@@ -26,7 +26,7 @@ BENCHMARK_TEMPLATE_F(mod, addition, 128, std::uint64_t)(benchmark::State& state)
 }
 
 BENCHMARK_TEMPLATE_F(mod, addition_assignment, 128, std::uint64_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod += 3u
         );
@@ -34,7 +34,7 @@ BENCHMARK_TEMPLATE_F(mod, addition_assignment, 128, std::uint64_t)(benchmark::St
 }
 
 BENCHMARK_TEMPLATE_F(mod, incremented_by, 128, std::uint64_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod.incremented_by(3u)
         );
@@ -42,7 +42,7 @@ BENCHMARK_TEMPLATE_F(mod, incremented_by, 128, std::uint64_t)(benchmark::State& 
 }
 
 BENCHMARK_TEMPLATE_F(mod, subtraction, 128, std::uint64_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod - 3u
         );
@@ -50,7 +50,7 @@ BENCHMARK_TEMPLATE_F(mod, subtraction, 128, std::uint64_t)(benchmark::State& sta
 }
 
 BENCHMARK_TEMPLATE_F(mod, subtraction_assignment, 128, std::uint64_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod -= 3u
         );
@@ -58,7 +58,7 @@ BENCHMARK_TEMPLATE_F(mod, subtraction_assignment, 128, std::uint64_t)(benchmark:
 }
 
 BENCHMARK_TEMPLATE_F(mod, decremented_by, 128, std::uint64_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod.decremented_by(3u)
         );
@@ -66,7 +66,7 @@ BENCHMARK_TEMPLATE_F(mod, decremented_by, 128, std::uint64_t)(benchmark::State& 
 }
 
 BENCHMARK_TEMPLATE_F(mod, multiplication, 128, std::uint64_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod * 3u
         );
@@ -74,7 +74,7 @@ BENCHMARK_TEMPLATE_F(mod, multiplication, 128, std::uint64_t)(benchmark::State& 
 }
 
 BENCHMARK_TEMPLATE_F(mod, multiplication_assignment, 128, std::uint64_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod *= 3u
         );
@@ -82,7 +82,7 @@ BENCHMARK_TEMPLATE_F(mod, multiplication_assignment, 128, std::uint64_t)(benchma
 }
 
 BENCHMARK_TEMPLATE_F(mod, incremented64, 128, std::uint64_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod.incremented()
         );
@@ -90,7 +90,7 @@ BENCHMARK_TEMPLATE_F(mod, incremented64, 128, std::uint64_t)(benchmark::State& s
 }
 
 BENCHMARK_TEMPLATE_F(mod, decremented64, 128, std::uint64_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod.decremented()
         );
@@ -98,7 +98,7 @@ BENCHMARK_TEMPLATE_F(mod, decremented64, 128, std::uint64_t)(benchmark::State& s
 }
 
 BENCHMARK_TEMPLATE_F(mod, incremented32, 128, std::uint32_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod.incremented()
         );
@@ -106,7 +106,7 @@ BENCHMARK_TEMPLATE_F(mod, incremented32, 128, std::uint32_t)(benchmark::State& s
 }
 
 BENCHMARK_TEMPLATE_F(mod, decremented32, 128, std::uint32_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod.decremented()
         );
@@ -114,7 +114,7 @@ BENCHMARK_TEMPLATE_F(mod, decremented32, 128, std::uint32_t)(benchmark::State& s
 }
 
 BENCHMARK_TEMPLATE_F(mod, incremented8, 128, std::uint8_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod.incremented()
         );
@@ -122,7 +122,7 @@ BENCHMARK_TEMPLATE_F(mod, incremented8, 128, std::uint8_t)(benchmark::State& sta
 }
 
 BENCHMARK_TEMPLATE_F(mod, decremented8, 128, std::uint8_t)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 mod.decremented()
         );

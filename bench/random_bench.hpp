@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "test_types.hpp"
+#include "../test/test_types.hpp"
 
 #include <apl/random.hpp>
 #include <benchmark/benchmark.h>
@@ -16,7 +16,7 @@ struct random: benchmark::Fixture {
 };
 
 BENCHMARK_F(random, xorshift)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 random()
         );
@@ -24,7 +24,7 @@ BENCHMARK_F(random, xorshift)(benchmark::State& state) {
 }
 
 BENCHMARK_F(random, integer)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 random.integer(-2048, 2048)
         );
@@ -32,7 +32,7 @@ BENCHMARK_F(random, integer)(benchmark::State& state) {
 }
 
 BENCHMARK_F(random, chance)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 random.chance()
         );
@@ -40,7 +40,7 @@ BENCHMARK_F(random, chance)(benchmark::State& state) {
 }
 
 BENCHMARK_F(random, real)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 random.real<double>()
         );
@@ -48,7 +48,7 @@ BENCHMARK_F(random, real)(benchmark::State& state) {
 }
 
 BENCHMARK_F(random, real_range)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 random.real<double>(-2048, 2048)
         );

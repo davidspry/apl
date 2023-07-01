@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "test_types.hpp"
+#include "../test/test_types.hpp"
 
 #include <apl/cexlock.hpp>
 #include <benchmark/benchmark.h>
@@ -17,7 +17,7 @@ struct cexlock: benchmark::Fixture {
 };
 
 BENCHMARK_TEMPLATE_F(cexlock, copy_read, detail::pod_type)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 cexlock.copy_read()
         );
@@ -25,7 +25,7 @@ BENCHMARK_TEMPLATE_F(cexlock, copy_read, detail::pod_type)(benchmark::State& sta
 }
 
 BENCHMARK_TEMPLATE_F(cexlock, lock_read, detail::pod_type)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(
                 cexlock.lock_read().operator*()
         );
@@ -34,13 +34,13 @@ BENCHMARK_TEMPLATE_F(cexlock, lock_read, detail::pod_type)(benchmark::State& sta
 
 BENCHMARK_TEMPLATE_F(cexlock, write, detail::pod_type)(benchmark::State& state) {
     const auto value = detail::pod_type{1, 2, "3"};
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         cexlock.write(value);
     }
 }
 
 BENCHMARK_TEMPLATE_F(cexlock, copy_read_then_write, detail::pod_type)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         cexlock.write(
                 cexlock.copy_read()
         );

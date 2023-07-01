@@ -4,12 +4,13 @@
 
 #pragma once
 
-#include "test_types.hpp"
+#include "../test/test_types.hpp"
 
 #include <apl/mwmr_queue.hpp>
 #include <benchmark/benchmark.h>
 #include <cstddef>
 #include <string>
+#include <thread>
 
 namespace apl::test {
 
@@ -20,20 +21,21 @@ struct mwmr_queue: benchmark::Fixture {
 
 BENCHMARK_TEMPLATE_DEFINE_F(mwmr_queue, push_then_pop_lvalue, detail::pod_type, 16)(benchmark::State& state) {
     const auto value = detail::pod_type();
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(queue.push(value));
         benchmark::DoNotOptimize(queue.pop());
     }
 }
 
+BENCHMARK_REGISTER_F(mwmr_queue, push_then_pop_lvalue)->ThreadRange(1, std::thread::hardware_concurrency());
+
 BENCHMARK_TEMPLATE_DEFINE_F(mwmr_queue, push_then_pop_rvalue, detail::pod_type, 16)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(queue.push(detail::pod_type()));
         benchmark::DoNotOptimize(queue.pop());
     }
 }
 
-BENCHMARK_REGISTER_F(mwmr_queue, push_then_pop_lvalue)->ThreadRange(1, 8);
-BENCHMARK_REGISTER_F(mwmr_queue, push_then_pop_rvalue)->ThreadRange(1, 8);
+BENCHMARK_REGISTER_F(mwmr_queue, push_then_pop_rvalue)->ThreadRange(1, std::thread::hardware_concurrency());
 
 }

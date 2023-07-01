@@ -1,19 +1,23 @@
 cmake_minimum_required(VERSION 3.14)
+project(apl VERSION 0.0.1 LANGUAGES CXX)
+set(TARGET ${PROJECT_NAME})
 
-project(apl VERSION 0.1.0 LANGUAGES CXX)
-set(target ${PROJECT_NAME})
+#===========================================
+option(APL_BUILD_TESTS "Build unit-tests and benchmarking targets" OFF)
 
-add_library(${target} INTERFACE)
+if (APL_BUILD_TESTS)
+    add_subdirectory(bench)
+    add_subdirectory(test)
+endif ()
 
-function(initialise_target target_name)
-    set_target_properties(${target_name}
-            PROPERTIES
-                CXX_STANDARD 23
-                CXX_STANDARD_REQUIRED ON)
+#===========================================
+add_library(${TARGET} INTERFACE)
 
-    target_include_directories(${target_name}
-            INTERFACE
-                include)
-endfunction()
+set_target_properties(${TARGET}
+        PROPERTIES
+            CXX_STANDARD 23
+            CXX_STANDARD_REQUIRED ON)
 
-initialise_target(${target})
+target_include_directories(${TARGET}
+        INTERFACE
+            include)

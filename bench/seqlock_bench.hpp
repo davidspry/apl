@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "test_types.hpp"
+#include "../test/test_types.hpp"
 
 #include <apl/seqlock.hpp>
 #include <benchmark/benchmark.h>
@@ -20,20 +20,20 @@ struct seqlock: benchmark::Fixture {
 
 BENCHMARK_TEMPLATE_F(seqlock, store_lvalue, detail::pod_type)(benchmark::State& state) {
     const auto value = detail::pod_type();
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         seqlock.store(value);
     }
 }
 
 BENCHMARK_TEMPLATE_F(seqlock, store_rvalue, detail::pod_type)(benchmark::State& state) {
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         seqlock.store(detail::pod_type());
     }
 }
 
 BENCHMARK_TEMPLATE_F(seqlock, read, detail::pod_type)(benchmark::State& state) {
     auto loaded_value = detail::pod_type{};
-    while (state.KeepRunning()) {
+    for (auto _: state) {
         benchmark::DoNotOptimize(seqlock.load(loaded_value));
     }
 }
