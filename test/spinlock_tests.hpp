@@ -2,7 +2,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/spinlock.hpp>
+#include <apl_threading/include/spinlock.hpp>
 #include <gtest/gtest.h>
 
 namespace apl::test {

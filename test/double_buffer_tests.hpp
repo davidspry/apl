@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/double_buffer.hpp>
+#include <apl_threading/include/double_buffer.hpp>
 #include <gtest/gtest.h>
 
 namespace apl::test {

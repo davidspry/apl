@@ -1,4 +1,3 @@
-#include "array_tests.hpp"
 #include "cexlock_tests.hpp"
 #include "double_buffer_tests.hpp"
 #include "mod_tests.hpp"

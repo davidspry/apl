@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <apl/utility.hpp>
+#include "apl_utility/apl_utility.hpp"
 #include <concepts>
 #include <cstddef>
 #include <gtest/gtest.h>
@@ -17,6 +17,12 @@ TEST(utility, constexpr_for_range) {
         ASSERT_TRUE(2 <= INDEX && INDEX < 4);
         ASSERT_TRUE(INDEX == std::get<INDEX>(tuple) - 1);
     });
+}
+
+TEST(utility, constexpr_for_range_length) {
+  apl::constexpr_for<8>([]<std::int64_t INDEX>() {
+    ASSERT_TRUE(0 <= INDEX && INDEX < 8);
+  });
 }
 
 TEST(utility, constexpr_for_each_non_type_parameter) {

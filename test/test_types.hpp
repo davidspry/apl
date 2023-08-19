@@ -43,7 +43,9 @@ struct noncopyable {
             value2(value2),
             value3(value3) {
     }
+    noncopyable(noncopyable&&) = default;
     noncopyable(const noncopyable&) = delete;
+    noncopyable& operator=(noncopyable&&) = default;
     noncopyable& operator=(const noncopyable&) = delete;
     constexpr bool operator==(const noncopyable&) const = default;
 };

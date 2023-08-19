@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/shared.hpp>
+#include <apl_events/include/shared.hpp>
 #include <atomic>
 #include <cstddef>
 #include <gtest/gtest.h>

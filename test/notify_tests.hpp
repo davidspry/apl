@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/notify.hpp>
+#include <apl_events/include/notify.hpp>
 #include <atomic>
 #include <cstddef>
 #include <gtest/gtest.h>

@@ -9,18 +9,18 @@ find_package(benchmark REQUIRED)
 add_executable(${TARGET} bench.cpp)
 
 set_target_properties(${TARGET}
-        PROPERTIES
-            CXX_STANDARD 23
-            CXX_STANDARD_REQUIRED ON)
+  PROPERTIES
+    CXX_STANDARD 23
+    CXX_STANDARD_REQUIRED ON)
 
 target_compile_options(${TARGET}
-        PRIVATE
-            -fexperimental-library)
+  PRIVATE
+    -fexperimental-library)
 
 target_include_directories(${TARGET}
-        PRIVATE
-            ../include)
+  PRIVATE
+    ../include)
 
 target_link_libraries(${TARGET}
-        PRIVATE
-            benchmark::benchmark)
+  PRIVATE
+    benchmark::benchmark)

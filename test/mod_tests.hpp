@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/mod.hpp>
+#include <apl_utility/include/mod.hpp>
 #include <gtest/gtest.h>
 #include <numeric>
 

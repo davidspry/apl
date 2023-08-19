@@ -6,7 +6,7 @@
 
 #include "test_types.hpp"
 
-#include <apl/mwmr_queue.hpp>
+#include <apl_threading/include/mwmr_queue.hpp>
 #include <gtest/gtest.h>
 
 namespace apl::test {
