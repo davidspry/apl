@@ -31,10 +31,25 @@ public:
     did_set
   };
 
+  // MARK: - Storage Interface
+
   //! Read the underlying value.
   static constexpr auto get() -> T::value_type requires non_atomic_storage {
     return m_storage.get();
   }
+
+  //! Set the underlying value.
+  static constexpr void set(const T::value_type value) requires non_atomic_storage {
+    m_storage.set(std::move(value));
+  }
+
+  //! Set the underlying value and emit accompanying will-set & did-set notifications to applicable types.
+  //! @returns A function, to which notifiable objects should be supplied as parameters.
+  static constexpr auto set_notify(T::value_type value) requires non_atomic_storage {
+    return set_notify_impl(std::move(value));
+  }
+
+  // MARK: - Atomic Storage Interface
 
   //! Read the underlying value.
   //! @param memory_order The memory-order to use when setting the underlying `std::atomic`.
@@ -42,11 +57,6 @@ public:
     const std::memory_order memory_order = std::memory_order::seq_cst
   ) -> T::value_type requires atomic_storage {
     return m_storage.get(memory_order);
-  }
-
-  //! Set the underlying value.
-  static constexpr void set(const T::value_type value) requires non_atomic_storage {
-    m_storage.set(std::move(value));
   }
 
   //! Set the underlying value.
@@ -60,26 +70,17 @@ public:
   }
 
   //! Set the underlying value and emit accompanying will-set & did-set notifications to applicable types.
+  //! @param value The new value to be set.
+  //! @param memory_order The memory-order to use when setting the underlying `std::atomic`.
   //! @returns A function, to which notifiable objects should be supplied as parameters.
-  static constexpr auto set_notify(T::value_type value) requires std::is_move_assignable_v<typename T::value_type> {
-    return [value = std::move(value)](detail::enum_notifiable<notifications> auto&& ... targets) {
-      static constexpr auto will_set = [](auto& notifiable) {
-        if constexpr (detail::enum_notifiable<decltype(notifiable), notifications>) {
-          notify<shared::notifications::will_set>(notifiable);
-        }
-      };
-
-      static constexpr auto did_set = [](auto& notifiable) {
-        if constexpr (detail::enum_notifiable<decltype(notifiable), notifications>) {
-          notify<shared::notifications::did_set>(notifiable);
-        }
-      };
-
-      (will_set(targets), ...);
-      impl::shared<T, storage_type>::set(value);
-      (did_set(targets), ...);
-    };
+  static constexpr auto set_notify(
+    T::value_type value,
+    std::memory_order memory_order = std::memory_order::seq_cst
+  ) requires atomic_storage {
+    return set_notify_impl(std::move(value), memory_order);
   }
+
+  // MARK: - Notifications Interface
 
   template<auto notification> static constexpr bool is_notification() {
     return std::same_as<notifications, decltype(notification)>;
@@ -93,6 +94,38 @@ public:
   template<auto notification> static constexpr bool did_set() {
     return is_notification<notification>() &&
            static_cast<notifications>(notification) == notifications::did_set;
+  }
+
+private:
+  // MARK: - Set Notify
+
+  static constexpr auto set_notify_impl(
+    const T::value_type value,
+    const std::memory_order memory_order = std::memory_order::seq_cst
+  ) {
+    static constexpr auto notify_will_set = [](auto& notifiable) {
+      if constexpr (detail::enum_notifiable<decltype(notifiable), notifications>) {
+        notify<shared::notifications::will_set>(notifiable);
+      }
+    };
+
+    static constexpr auto notify_did_set = [](auto& notifiable) {
+      if constexpr (detail::enum_notifiable<decltype(notifiable), notifications>) {
+        notify<shared::notifications::did_set>(notifiable);
+      }
+    };
+
+    return [value = std::move(value), memory_order](detail::enum_notifiable<notifications> auto&& ... targets) {
+      (notify_will_set(targets), ...);
+
+      if constexpr (atomic_storage) {
+        impl::shared<T, storage_type>::set(value, memory_order);
+      } else {
+        impl::shared<T, storage_type>::set(value);
+      }
+
+      (notify_did_set(targets), ...);
+    };
   }
 };
 
