@@ -103,19 +103,19 @@ private:
     const T::value_type value,
     const std::memory_order memory_order = std::memory_order::seq_cst
   ) {
-    static constexpr auto notify_will_set = [](auto& notifiable) {
-      if constexpr (detail::enum_notifiable<decltype(notifiable), notifications>) {
-        notify<shared::notifications::will_set>(notifiable);
-      }
-    };
+    return [value, memory_order](detail::enum_notifiable<notifications> auto&& ... targets) {
+      static constexpr auto notify_will_set = [](auto& notifiable) {
+        if constexpr (detail::enum_notifiable<decltype(notifiable), notifications>) {
+          notify<shared::notifications::will_set>(notifiable);
+        }
+      };
 
-    static constexpr auto notify_did_set = [](auto& notifiable) {
-      if constexpr (detail::enum_notifiable<decltype(notifiable), notifications>) {
-        notify<shared::notifications::did_set>(notifiable);
-      }
-    };
+      static constexpr auto notify_did_set = [](auto& notifiable) {
+        if constexpr (detail::enum_notifiable<decltype(notifiable), notifications>) {
+          notify<shared::notifications::did_set>(notifiable);
+        }
+      };
 
-    return [value = std::move(value), memory_order](detail::enum_notifiable<notifications> auto&& ... targets) {
       (notify_will_set(targets), ...);
 
       if constexpr (atomic_storage) {
