@@ -18,8 +18,8 @@ template<
   detail::state_type T,
   detail::storage_type<typename T::value_type> storage_type
 > requires std::is_default_constructible<typename T::value_type>::value and
-           std::is_move_constructible<typename T::value_type>::value or
-           std::is_copy_constructible<typename T::value_type>::value
+           (std::is_move_constructible<typename T::value_type>::value or
+            std::is_copy_constructible<typename T::value_type>::value)
 class shared final {
   inline static storage_type m_storage{};
   static constexpr auto atomic_storage = std::same_as<typename T::atomic, std::true_type>;
