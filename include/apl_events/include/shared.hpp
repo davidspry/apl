@@ -137,8 +137,8 @@ class storage final {
   T m_value{};
 
 public:
-  auto get() const { return m_value; }
-  auto set(T value) { m_value = value; }
+  auto get() const -> T { return m_value; }
+  void set(T value) { m_value = value; }
 };
 
 template<typename T>
@@ -146,11 +146,11 @@ class atomic_storage final {
   std::atomic<T> m_value{};
 
 public:
-  auto get(const std::memory_order memory_order = std::memory_order::seq_cst) const {
+  auto get(const std::memory_order memory_order = std::memory_order::seq_cst) const -> T {
     return m_value.load(memory_order);
   }
 
-  auto set(T value, const std::memory_order memory_order = std::memory_order::seq_cst) {
+  void set(T value, const std::memory_order memory_order = std::memory_order::seq_cst) {
     m_value.store(std::move(value), memory_order);
   }
 };
