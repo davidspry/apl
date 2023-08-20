@@ -29,9 +29,9 @@ concept state_type = requires {
   { !std::is_void<typename T::value_type>::value };
 };
 
-template<typename T, typename underlying_type>
-concept storage_type = requires(T& type, underlying_type value) {
-  { type.get() } -> std::same_as<underlying_type>;
+template<typename T, typename U>
+concept storage_type = requires(T& type, U value) {
+  { type.get() } -> std::same_as<U>;
   { type.set(value) } -> std::same_as<void>;
 };
 
