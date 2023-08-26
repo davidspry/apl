@@ -1,12 +1,15 @@
 cmake_minimum_required(VERSION 3.14)
-project(apl_test VERSION 0.1.0 LANGUAGES CXX)
+project(apl_threading_bench VERSION 0.1.0 LANGUAGES CXX)
 set(TARGET ${PROJECT_NAME})
 
 #===========================================
-find_package(GTest REQUIRED)
+find_package(benchmark REQUIRED)
 
 #===========================================
-add_executable(${TARGET} test_apl.cpp)
+cmake_path(SET APL_INCLUDE NORMALIZE "../../")
+
+#===========================================
+add_executable(${TARGET} bench_apl_threading.cpp)
 
 set_target_properties(${TARGET}
   PROPERTIES
@@ -19,8 +22,8 @@ target_compile_options(${TARGET}
 
 target_include_directories(${TARGET}
   PRIVATE
-    ../include)
+    ${APL_INCLUDE})
 
 target_link_libraries(${TARGET}
   PRIVATE
-    GTest::GTest)
+    benchmark::benchmark)

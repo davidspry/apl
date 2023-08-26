@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include "../test/test_types.hpp"
-
 #include <apl_utility/include/random.hpp>
 #include <benchmark/benchmark.h>
 

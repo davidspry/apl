@@ -6,7 +6,7 @@ set(TARGET ${PROJECT_NAME})
 find_package(benchmark REQUIRED)
 
 #===========================================
-add_executable(${TARGET} bench.cpp)
+add_executable(${TARGET} bench_apl.cpp)
 
 set_target_properties(${TARGET}
   PROPERTIES
