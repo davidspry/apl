@@ -6,8 +6,6 @@
 
 #include "test_apl_utility.hpp"
 
-#include "apl_utility/include/tokens.hpp"
-
 auto main(int argc, char** argv) -> int {
   using namespace testing;
   InitGoogleTest(&argc, argv);
