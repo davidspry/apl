@@ -9,5 +9,6 @@
 #include "include/random.hpp"
 #include "include/range.hpp"
 #include "include/repeat.hpp"
+#include "include/static_stack.hpp"
 
 namespace apl {}
