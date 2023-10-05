@@ -23,7 +23,7 @@ public:
     return SIZE;
   }
 
-  auto is_full() const -> bool {
+  [[nodiscard]] auto is_full() const -> bool {
     return m_index == SIZE;
   }
 
