@@ -2,6 +2,7 @@
 
 #include "test_invoke_once.hpp"
 #include "test_mod.hpp"
+#include "test_predicate.hpp"
 #include "test_random.hpp"
 #include "test_range.hpp"
 #include "test_repeat.hpp"

@@ -6,6 +6,7 @@
 
 #include "include/invoke_once.hpp"
 #include "include/mod.hpp"
+#include "include/predicate.hpp"
 #include "include/random.hpp"
 #include "include/range.hpp"
 #include "include/repeat.hpp"
