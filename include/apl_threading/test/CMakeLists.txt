@@ -13,13 +13,13 @@ add_executable(${TARGET} test_apl_threading.cpp)
 
 set_target_properties(${TARGET}
   PROPERTIES
-  CXX_STANDARD 23
-  CXX_STANDARD_REQUIRED ON)
+    CXX_STANDARD 23
+    CXX_STANDARD_REQUIRED ON)
 
 target_include_directories(${TARGET}
   PRIVATE
-  ${APL_INCLUDE})
+    ${APL_INCLUDE})
 
 target_link_libraries(${TARGET}
   PRIVATE
-  GTest::GTest)
+    GTest::GTest)

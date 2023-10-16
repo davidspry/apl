@@ -1,4 +1,4 @@
-//! APL
+//! apl
 //! David Spry
 //! Created on 1/7/2023
 
