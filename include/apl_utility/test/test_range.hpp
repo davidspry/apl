@@ -5,7 +5,6 @@
 #pragma once
 
 #include <apl_utility/include/range.hpp>
-#include <fmt/format.h>
 #include <gtest/gtest.h>
 #include <numeric>
 

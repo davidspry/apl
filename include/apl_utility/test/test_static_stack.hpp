@@ -1,7 +1,6 @@
 #pragma once
 
 #include <apl_utility/include/static_stack.hpp>
-#include <fmt/format.h>
 #include <gtest/gtest.h>
 
 namespace apl::test {

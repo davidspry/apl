@@ -6,7 +6,6 @@
 
 #include <algorithm>
 #include <concepts>
-#include <fmt/format.h>
 #include <iterator>
 
 namespace apl::impl {
