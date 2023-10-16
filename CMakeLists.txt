@@ -6,6 +6,7 @@ set(TARGET ${PROJECT_NAME})
 option(APL_BUILD_TESTS "Build unit-tests and benchmarking targets" OFF)
 
 if (APL_BUILD_TESTS)
+  message("-- Building unit-tests and benchmarking targets")
   add_subdirectory(bench)
   add_subdirectory(test)
 endif ()
