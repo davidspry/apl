@@ -2,6 +2,7 @@
 
 #include <apl_utility/include/static_stack.hpp>
 #include <gtest/gtest.h>
+#include <ranges>
 
 namespace apl::test {
 
@@ -48,6 +49,23 @@ TEST(static_stack, alternately_push_and_pull) {
     }
 
     should_push = not(should_push);
+  }
+}
+
+TEST(static_stack, iterators) {
+  constexpr auto size = 16;
+  for (const auto limit: {size >> 0, size >> 1, size >> 2, size >> 3}) {
+    auto lifo = apl::static_stack<std::size_t, size>{};
+    for (auto i = 0uz; i < limit; ++i) {
+      lifo.push(i);
+    }
+
+    ASSERT_TRUE(
+      std::ranges::equal(
+        std::views::reverse(std::views::iota(0, limit)),
+        lifo
+      )
+    );
   }
 }
 

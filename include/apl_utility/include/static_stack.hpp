@@ -44,6 +44,19 @@ public:
 
     return std::nullopt;
   }
+
+  // =============================================================================
+  // @formatter:off
+  auto begin()          { return std::reverse_iterator(m_array.begin() + m_index); }
+  auto begin() const    { return std::reverse_iterator(m_array.begin() + m_index); }
+  auto end()            { return m_array.rend(); }
+  auto end() const      { return m_array.rend(); }
+
+  auto rbegin()         { return m_array.begin(); }
+  auto rbegin() const   { return m_array.begin(); }
+  auto rend()           { return m_array.begin() + m_index; }
+  auto rend() const     { return m_array.begin() + m_index; }
+  // @formatter:on
 };
 
 }
