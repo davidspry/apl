@@ -16,10 +16,6 @@ set_target_properties(${TARGET}
     CXX_STANDARD 23
     CXX_STANDARD_REQUIRED ON)
 
-target_compile_options(${TARGET}
-  PRIVATE
-    -fexperimental-library)
-
 target_include_directories(${TARGET}
   PRIVATE
     ${APL_INCLUDE})
