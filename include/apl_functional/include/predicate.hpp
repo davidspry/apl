@@ -13,7 +13,6 @@ static constexpr auto even = [](const std::integral auto value) {
   return (value & 1u) == 0;
 };
 
-// =============================================================================
 static constexpr auto eq = []<class T>(T&& sentinel) {
   return [sentinel = std::forward<T>(sentinel)]<std::totally_ordered_with<T> U>(const U value) {
     return value == sentinel;

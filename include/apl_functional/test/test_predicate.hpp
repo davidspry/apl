@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include <apl_utility/include/predicate.hpp>
+#include <algorithm>
+#include <apl_functional/include/predicate.hpp>
 #include <array>
 #include <cstddef>
 #include <gtest/gtest.h>

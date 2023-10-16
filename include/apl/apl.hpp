@@ -12,6 +12,7 @@
 
 #pragma once
 
-#include <apl_events/apl_events.hpp>
-#include <apl_threading/apl_threading.hpp>
-#include <apl_utility/apl_utility.hpp>
+#include <apl/events.hpp>
+#include <apl/functional.hpp>
+#include <apl/threading.hpp>
+#include <apl/utility.hpp>
