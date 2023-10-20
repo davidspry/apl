@@ -26,7 +26,6 @@ TEST(combine, apply) {
 
 TEST(combine, partial_apply) {
   ASSERT_EQ(15, apl::partial_apply(10)(sum)(5));
-
   ASSERT_EQ(15, apl::apply(10)(apl::partial(sum))(5));
 }
 
