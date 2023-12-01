@@ -11,5 +11,6 @@
 #include "include/range.hpp"
 #include "include/repeat.hpp"
 #include "include/static_stack.hpp"
+#include "include/unpack.hpp"
 
 namespace apl {}
