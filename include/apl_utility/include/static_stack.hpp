@@ -12,7 +12,7 @@ namespace apl {
 
 //! @brief A LIFO stack with a fixed capacity.
 
-template<class T, std::size_t SIZE>
+template<class T, std::size_t SIZE> requires (SIZE > 0)
 class static_stack {
   std::array<T, SIZE> m_array;
   std::size_t m_index;
