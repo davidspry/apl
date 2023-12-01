@@ -27,7 +27,7 @@ template<
 > requires (RANGE_FINAL_INDEX > 0)
 constexpr void repeat(loop_body_fn_t&& loop_body_fn) {
   [&loop_body_fn]<std::size_t... INDEX>(const std::index_sequence<INDEX...>) {
-    (loop_body_fn.template operator()<static_cast<std::size_t>(INDEX)>(), ...);
+    (loop_body_fn.template operator()<INDEX>(), ...);
   }(std::make_index_sequence<RANGE_FINAL_INDEX>());
 }
 
