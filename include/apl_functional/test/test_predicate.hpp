@@ -24,12 +24,34 @@ TEST(predicate, filter_even) {
   );
 }
 
+TEST(predicate, filter_odd) {
+  static constexpr auto inputs = std::views::iota(1, 10);
+  static constexpr auto result = std::array{1, 3, 5, 7, 9};
+  ASSERT_TRUE(
+    std::ranges::equal(
+      std::views::all(inputs) | std::views::filter(apl::odd),
+      std::views::all(result)
+    )
+  );
+}
+
 TEST(predicate, filter_eq) {
   static constexpr auto inputs = std::views::iota(1, 10);
   static constexpr auto result = std::views::iota(5, 6);
   ASSERT_TRUE(
     std::ranges::equal(
       std::views::all(inputs) | std::views::filter(apl::eq(5)),
+      std::views::all(result)
+    )
+  );
+}
+
+TEST(predicate, filter_ne) {
+  static constexpr auto inputs = std::views::iota(1, 10);
+  static constexpr auto result = std::views::iota(1, 9);
+  ASSERT_TRUE(
+    std::ranges::equal(
+      std::views::all(inputs) | std::views::filter(apl::ne(9)),
       std::views::all(result)
     )
   );
