@@ -18,13 +18,13 @@ static constexpr auto odd = [](const std::integral auto value) {
 };
 
 static constexpr auto eq = []<class T>(T&& sentinel) {
-  return [sentinel = std::forward<T>(sentinel)]<std::totally_ordered_with<T> U>(const U value) {
+  return [sentinel = std::forward<T>(sentinel)]<std::equality_comparable_with<T> U>(const U value) {
     return value == sentinel;
   };
 };
 
 static constexpr auto ne = []<class T>(T&& sentinel) {
-  return [sentinel = std::forward<T>(sentinel)]<std::totally_ordered_with<T> U>(const U value) {
+  return [sentinel = std::forward<T>(sentinel)]<std::equality_comparable_with<T> U>(const U value) {
     return value != sentinel;
   };
 };
