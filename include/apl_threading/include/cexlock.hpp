@@ -33,9 +33,9 @@ public:
     m_value_ptr(m_value.get()) {}
 
   constexpr cexlock(const cexlock&) = delete;
-  constexpr cexlock(const cexlock&&) = delete;
+  constexpr cexlock(cexlock&&) noexcept = default;
   constexpr auto operator=(const cexlock&) = delete;
-  constexpr auto operator=(const cexlock&&) noexcept = delete;
+  constexpr auto operator=(cexlock&&) noexcept -> cexlock& = default;
 
   //! Temporarily obtain exclusive access in order to copy the underlying value.
   constexpr auto copy_read() -> T requires std::is_trivially_copyable<T>::value {
