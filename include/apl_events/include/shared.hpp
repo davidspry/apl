@@ -103,15 +103,15 @@ private:
     const T::value_type value,
     const std::memory_order memory_order = std::memory_order::seq_cst
   ) {
-      static constexpr auto notify_will_set = [](auto& notifiable) {
-        if constexpr (detail::enum_notifiable<decltype(notifiable), notifications>) {
     return [=](detail::enum_notifiable<notifications> auto&& ... targets) {
+      static constexpr auto notify_will_set = []<class N>(N& notifiable) {
+        if constexpr (detail::enum_notifiable<N, notifications>) {
           notify<shared::notifications::will_set>(notifiable);
         }
       };
 
-      static constexpr auto notify_did_set = [](auto& notifiable) {
-        if constexpr (detail::enum_notifiable<decltype(notifiable), notifications>) {
+      static constexpr auto notify_did_set = []<class N>(N& notifiable) {
+        if constexpr (detail::enum_notifiable<N, notifications>) {
           notify<shared::notifications::did_set>(notifiable);
         }
       };
