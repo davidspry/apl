@@ -39,7 +39,7 @@ TEST(unpack, enum_values) {
 TEST(unpack, types) {
   static constexpr auto values = std::make_tuple(0, 1u, 2.0f, 3.0, 4uz);
   static auto index = 0;
-  std::apply([]<class... T>(T&& ... tuple_values) {
+  std::apply([]<class... T>(T&& ...) {
     apl::unpack<T...>(
       []<class U>() {
         ASSERT_EQ(
@@ -59,7 +59,7 @@ TEST(enumerate, nttp) {
 
 TEST(enumerate, types) {
   static constexpr auto values = std::make_tuple(0, 1u, 2.0f, 3.0, 4uz);
-  std::apply([]<class... T>(T&& ... tuple_values) {
+  std::apply([]<class... T>(T&& ...) {
     apl::enumerate<T...>(
       []<std::size_t INDEX, class U> {
         ASSERT_TRUE(
