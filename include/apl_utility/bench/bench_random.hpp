@@ -13,7 +13,7 @@ struct random: benchmark::Fixture {
   apl::random random{};
 };
 
-BENCHMARK_F(random, xorshift)(benchmark::State& state) {
+BENCHMARK_F(random, xoroshiro128p)(benchmark::State& state) {
   for (auto _: state) {
     benchmark::DoNotOptimize(
       random()
@@ -21,34 +21,50 @@ BENCHMARK_F(random, xorshift)(benchmark::State& state) {
   }
 }
 
-BENCHMARK_F(random, integer)(benchmark::State& state) {
+BENCHMARK_F(random, integral_u32)(benchmark::State& state) {
   for (auto _: state) {
     benchmark::DoNotOptimize(
-      random.integer(-2048, 2048)
+      random.operator()<std::uint32_t>()
     );
   }
 }
 
-BENCHMARK_F(random, chance)(benchmark::State& state) {
+BENCHMARK_F(random, integral_bool)(benchmark::State& state) {
   for (auto _: state) {
     benchmark::DoNotOptimize(
-      random.chance()
+      random.operator()<bool>()
     );
   }
 }
 
-BENCHMARK_F(random, real)(benchmark::State& state) {
+BENCHMARK_F(random, uniform_f32)(benchmark::State& state) {
   for (auto _: state) {
     benchmark::DoNotOptimize(
-      random.real<double>()
+      random.uniform<float>()
     );
   }
 }
 
-BENCHMARK_F(random, real_range)(benchmark::State& state) {
+BENCHMARK_F(random, uniform_f64)(benchmark::State& state) {
   for (auto _: state) {
     benchmark::DoNotOptimize(
-      random.real<double>(-2048, 2048)
+      random.uniform<double>()
+    );
+  }
+}
+
+BENCHMARK_F(random, normal_f32)(benchmark::State& state) {
+  for (auto _: state) {
+    benchmark::DoNotOptimize(
+      random.normal<float>()
+    );
+  }
+}
+
+BENCHMARK_F(random, normal_f64)(benchmark::State& state) {
+  for (auto _: state) {
+    benchmark::DoNotOptimize(
+      random.normal<double>()
     );
   }
 }
