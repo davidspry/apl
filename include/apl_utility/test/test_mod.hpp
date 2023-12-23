@@ -73,7 +73,7 @@ TEST(mod, prefix_incr_decr_operators) {
   }
 
   for (auto i = 0; i < limit * 2; ++i) {
-    ASSERT_EQ(m.incremented().value(), (i + 1) % limit);
+    ASSERT_EQ(m.increment().value(), (i + 1) % limit);
   }
 
   for (auto i = limit * 2; i > 0; --i) {
@@ -81,7 +81,7 @@ TEST(mod, prefix_incr_decr_operators) {
   }
 
   for (auto i = limit * 2; i > 0; --i) {
-    ASSERT_EQ(m.decremented().value(), (i + limit - 1) % limit);
+    ASSERT_EQ(m.decrement().value(), (i + limit - 1) % limit);
   }
 }
 

@@ -21,11 +21,11 @@ template<
 class mod {
   unsigned_t m_value;
 
-  static constexpr auto wrap(const unsigned_t value) {
+  static constexpr auto wrap(const unsigned_t value) -> unsigned_t {
     if constexpr (std::has_single_bit(LIMIT)) {
-      return value & (LIMIT - 1);
+      return value & static_cast<unsigned_t>(LIMIT - 1);
     } else {
-      return value % LIMIT;
+      return value % static_cast<unsigned_t>(LIMIT);
     }
   }
 
@@ -44,22 +44,62 @@ public:
   }
 
   [[nodiscard]]
-  constexpr auto incremented() -> mod {
-    return this->operator++();
+  constexpr auto increment() -> mod& {
+    return this->operator+=(1);
   }
 
   [[nodiscard]]
-  constexpr auto incremented_by(const std::size_t delta) -> mod {
+  constexpr auto increment_by(const unsigned_t delta) -> mod& {
+    return this->operator+=(delta);
+  }
+
+  [[nodiscard]]
+  constexpr auto increment_by(const mod delta) -> mod& {
+    return this->operator+=(delta);
+  }
+
+  [[nodiscard]]
+  constexpr auto decrement() -> mod& {
+    return this->operator-=(1);
+  }
+
+  [[nodiscard]]
+  constexpr auto decrement_by(const unsigned_t delta) -> mod& {
+    return this->operator-=(delta);
+  }
+
+  [[nodiscard]]
+  constexpr auto decrement_by(const mod delta) -> mod& {
+    return this->operator-=(delta);
+  }
+
+  [[nodiscard]]
+  constexpr auto incremented() const -> mod {
+    return this->operator+(1);
+  }
+
+  [[nodiscard]]
+  constexpr auto incremented_by(const unsigned_t delta) const -> mod {
     return this->operator+(delta);
   }
 
   [[nodiscard]]
-  constexpr auto decremented() -> mod {
-    return this->operator--();
+  constexpr auto incremented_by(const mod delta) const -> mod {
+    return this->operator+(delta);
   }
 
   [[nodiscard]]
-  constexpr auto decremented_by(const std::size_t delta) -> mod {
+  constexpr auto decremented() const -> mod {
+    return this->operator-(1);
+  }
+
+  [[nodiscard]]
+  constexpr auto decremented_by(const unsigned_t delta) -> mod {
+    return this->operator-(delta);
+  }
+
+  [[nodiscard]]
+  constexpr auto decremented_by(const mod delta) -> mod {
     return this->operator-(delta);
   }
 
@@ -69,6 +109,10 @@ public:
     m_value = wrap(value);
     return *this;
   }
+
+  // MARK: - Equality
+
+  constexpr auto operator<=>(const mod&) const -> std::strong_ordering = default;
 
   // MARK: - Increment/Decrement Operators
 
@@ -96,85 +140,157 @@ public:
 
   // MARK: - Arithmetic Operators
 
-  constexpr auto operator+(std::unsigned_integral auto other_value) -> mod {
+  constexpr auto operator+(const unsigned_t other_value) const -> mod {
     return mod(m_value + other_value);
   }
 
-  constexpr auto operator+=(std::unsigned_integral auto other_value) -> mod& {
+  constexpr auto operator+(const mod other) const -> mod {
+    return operator+(other.m_value);
+  }
+
+  constexpr auto operator+=(const unsigned_t other_value) -> mod& {
     m_value = this->operator+(other_value).m_value;
     return *this;
   }
 
-  constexpr auto operator-(std::unsigned_integral auto other_value) -> mod {
+  constexpr auto operator+=(const mod other) -> mod& {
+    return operator+=(other.m_value);
+  }
+
+  constexpr auto operator-(const unsigned_t other_value) const -> mod {
     return mod(m_value - wrap(other_value) + LIMIT);
   }
 
-  constexpr auto operator-=(std::unsigned_integral auto other_value) -> mod& {
+  constexpr auto operator-(const mod other) const -> mod {
+    return operator-(other.m_value);
+  }
+
+  constexpr auto operator-=(const unsigned_t other_value) -> mod& {
     m_value = this->operator-(other_value).m_value;
     return *this;
   }
 
-  constexpr auto operator*(std::unsigned_integral auto other_value) -> mod {
+  constexpr auto operator-=(const mod other) -> mod& {
+    return operator-=(other.m_value);
+  }
+
+  constexpr auto operator*(const unsigned_t other_value) const -> mod {
     return mod(m_value * other_value);
   }
 
-  constexpr auto operator*=(std::unsigned_integral auto other_value) -> mod& {
+  constexpr auto operator*(const mod other) const -> mod {
+    return operator*(other.m_value);
+  }
+
+  constexpr auto operator*=(const unsigned_t other_value) -> mod& {
     m_value = this->operator*(other_value).m_value;
     return *this;
   }
 
-  constexpr auto operator/(std::unsigned_integral auto other_value) -> mod {
+  constexpr auto operator*=(const mod other) -> mod& {
+    return operator*=(other.m_value);
+  }
+
+  constexpr auto operator/(const unsigned_t other_value) const -> mod {
     return mod(m_value / other_value);
   }
 
-  constexpr auto operator/=(std::unsigned_integral auto other_value) -> mod& {
+  constexpr auto operator/(const mod other) const -> mod {
+    return operator/(other.m_value);
+  }
+
+  constexpr auto operator/=(const unsigned_t other_value) -> mod& {
     m_value /= other_value;
     return *this;
   }
 
-  constexpr auto operator<<(std::unsigned_integral auto other_value) -> mod {
+  constexpr auto operator/=(const mod other) -> mod& {
+    return operator/=(other.m_value);
+  }
+
+  constexpr auto operator<<(const unsigned_t other_value) const -> mod {
     return mod(m_value << other_value);
   }
 
-  constexpr auto operator<<=(std::unsigned_integral auto other_value) -> mod& {
+  constexpr auto operator<<(const mod other) const -> mod {
+    return operator<<(other.m_value);
+  }
+
+  constexpr auto operator<<=(const unsigned_t other_value) -> mod& {
     m_value = this->operator<<(other_value).m_value;
     return *this;
   }
 
-  constexpr auto operator>>(std::unsigned_integral auto other_value) -> mod {
+  constexpr auto operator<<=(const mod other) -> mod& {
+    return operator<<=(other.m_value);
+  }
+
+  constexpr auto operator>>(const unsigned_t other_value) const -> mod {
     return mod(m_value >> other_value);
   }
 
-  constexpr auto operator>>=(std::unsigned_integral auto other_value) -> mod& {
+  constexpr auto operator>>(const mod other) const -> mod {
+    return operator>>(other.m_value);
+  }
+
+  constexpr auto operator>>=(const unsigned_t other_value) -> mod& {
     m_value = this->operator>>(other_value).m_value;
     return *this;
   }
 
-  constexpr auto operator&(std::unsigned_integral auto other_value) -> mod {
+  constexpr auto operator>>=(const mod other) -> mod& {
+    return operator>>=(other.m_value);
+  }
+
+  constexpr auto operator&(const unsigned_t other_value) const -> mod {
     return mod(m_value & other_value);
   }
 
-  constexpr auto operator&=(std::unsigned_integral auto other_value) -> mod& {
+  constexpr auto operator&(const mod other) const -> mod {
+    return operator&(other.m_value);
+  }
+
+  constexpr auto operator&=(const unsigned_t other_value) -> mod& {
     m_value = this->operator&(other_value).m_value;
     return *this;
   }
 
-  constexpr auto operator|(std::unsigned_integral auto other_value) -> mod {
+  constexpr auto operator&=(const mod other) -> mod& {
+    return operator&=(other.m_value);
+  }
+
+  constexpr auto operator|(const unsigned_t other_value) const -> mod {
     return mod(m_value | other_value);
   }
 
-  constexpr auto operator|=(std::unsigned_integral auto other_value) -> mod& {
+  constexpr auto operator|(const mod other) const -> mod {
+    return operator|(other.m_value);
+  }
+
+  constexpr auto operator|=(const unsigned_t other_value) -> mod& {
     m_value = this->operator|(other_value).m_value;
     return *this;
   }
 
-  constexpr auto operator^(std::unsigned_integral auto other_value) -> mod {
+  constexpr auto operator|=(const mod other) -> mod& {
+    return operator|=(other.m_value);
+  }
+
+  constexpr auto operator^(const unsigned_t other_value) const -> mod {
     return mod(m_value ^ other_value);
   }
 
-  constexpr auto operator^=(std::unsigned_integral auto other_value) -> mod& {
+  constexpr auto operator^(const mod other) const -> mod {
+    return operator^(other.m_value);
+  }
+
+  constexpr auto operator^=(const unsigned_t other_value) -> mod& {
     m_value = this->operator^(other_value).m_value;
     return *this;
+  }
+
+  constexpr auto operator^=(const mod other) -> mod& {
+    return operator^=(other.m_value);
   }
 
   // MARK: - Iterators
