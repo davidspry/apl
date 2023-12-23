@@ -6,6 +6,7 @@
 #include "test_range.hpp"
 #include "test_repeat.hpp"
 #include "test_static_stack.hpp"
+#include "test_static_vector.hpp"
 #include "test_unpack.hpp"
 
 namespace apl::test {}
