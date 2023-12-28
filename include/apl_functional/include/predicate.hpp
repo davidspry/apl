@@ -18,38 +18,38 @@ static constexpr auto odd = [](const std::integral auto value) {
 };
 
 static constexpr auto eq = []<class T>(T&& sentinel) {
-  return [sentinel = std::forward<T>(sentinel)]<std::equality_comparable_with<T> U>(const U value) {
-    return value == sentinel;
+  return [&]<std::equality_comparable_with<T> U>(const U value) {
+    return value == std::forward<T>(sentinel);
   };
 };
 
 static constexpr auto ne = []<class T>(T&& sentinel) {
-  return [sentinel = std::forward<T>(sentinel)]<std::equality_comparable_with<T> U>(const U value) {
-    return value != sentinel;
+  return [&]<std::equality_comparable_with<T> U>(const U value) {
+    return value != std::forward<T>(sentinel);
   };
 };
 
 static constexpr auto lt = []<class T>(T&& sentinel) {
-  return [sentinel = std::forward<T>(sentinel)]<std::totally_ordered_with<T> U>(const U value) {
-    return value < sentinel;
+  return [&]<std::totally_ordered_with<T> U>(const U value) {
+    return value < std::forward<T>(sentinel);
   };
 };
 
 static constexpr auto leq = []<class T>(T&& sentinel) {
-  return [sentinel = std::forward<T>(sentinel)]<std::totally_ordered_with<T> U>(const U value) {
-    return value <= sentinel;
+  return [&]<std::totally_ordered_with<T> U>(const U value) {
+    return value <= std::forward<T>(sentinel);
   };
 };
 
 static constexpr auto gt = []<class T>(T&& sentinel) {
-  return [sentinel = std::forward<T>(sentinel)]<std::totally_ordered_with<T> U>(const U value) {
-    return value > sentinel;
+  return [&]<std::totally_ordered_with<T> U>(const U value) {
+    return value > std::forward<T>(sentinel);
   };
 };
 
 static constexpr auto geq = []<class T>(T&& sentinel) {
-  return [sentinel = std::forward<T>(sentinel)]<std::totally_ordered_with<T> U>(const U value) {
-    return value >= sentinel;
+  return [&]<std::totally_ordered_with<T> U>(const U value) {
+    return value >= std::forward<T>(sentinel);
   };
 };
 
