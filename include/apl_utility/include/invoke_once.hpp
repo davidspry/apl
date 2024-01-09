@@ -14,10 +14,10 @@ namespace apl {
   #define CONSTEXPR_AFTER_CPP23
 #endif
 
-template<class fn_t, class... args_t>
-requires std::is_invocable_r_v<void, fn_t, args_t...>
-CONSTEXPR_AFTER_CPP23 void invoke_once(fn_t&& invocable, args_t&& ... args) {
-  [[maybe_unused]] static auto _ = [&invocable, ...arguments = std::forward<args_t>(args)] {
+template<class F, class... A>
+requires std::is_invocable_r_v<void, F, A...>
+CONSTEXPR_AFTER_CPP23 void invoke_once(F&& invocable, A&& ... args) {
+  [[maybe_unused]] static auto _ = [&invocable, ...arguments = std::forward<A>(args)] {
     std::invoke(invocable, arguments...);
     return true;
   }();

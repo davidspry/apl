@@ -9,27 +9,27 @@
 
 namespace apl {
 
-template<auto... T, class loop_body_fn_t>
-constexpr void unpack(const loop_body_fn_t loop_body_fn) {
-  (loop_body_fn.template operator()<T>(), ...);
+template<auto... T, class F>
+constexpr void unpack(F&& fn) {
+  (std::forward<F>(fn).template operator()<T>(), ...);
 }
 
-template<class... T, class loop_body_fn_t>
-constexpr void unpack(const loop_body_fn_t loop_body_fn) {
-  (loop_body_fn.template operator()<T>(), ...);
+template<class... T, class F>
+constexpr void unpack(F&& fn) {
+  (std::forward<F>(fn).template operator()<T>(), ...);
 }
 
-template<auto... T, class loop_body_fn_t>
-constexpr void enumerate(const loop_body_fn_t loop_body_fn) {
-  [fn = std::move(loop_body_fn)]<std::size_t... INDEX>(const std::index_sequence<INDEX...>) {
-    (fn.template operator()<INDEX, T>(), ...);
+template<auto... T, class F>
+constexpr void enumerate(F&& fn) {
+  [&fn]<std::size_t... INDEX>(const std::index_sequence<INDEX...>) {
+    (std::forward<F>(fn).template operator()<INDEX, T>(), ...);
   }(std::make_index_sequence<sizeof...(T)>());
 }
 
-template<class... T, class loop_body_fn_t>
-constexpr void enumerate(const loop_body_fn_t loop_body_fn) {
-  [fn = std::move(loop_body_fn)]<std::size_t... INDEX>(const std::index_sequence<INDEX...>) {
-    (fn.template operator()<INDEX, T>(), ...);
+template<class... T, class F>
+constexpr void enumerate(F&& fn) {
+  [&fn]<std::size_t... INDEX>(const std::index_sequence<INDEX...>) {
+    (std::forward<F>(fn).template operator()<INDEX, T>(), ...);
   }(std::make_index_sequence<sizeof...(T)>());
 }
 
