@@ -1,0 +1,9 @@
+[
+  {
+    "label": "apl_app: Debug",
+    "adapter": "CodeLLDB",
+    "request": "launch",
+    "program": "build/app/apl_app",
+    "cwd": "$ZED_WORKTREE_ROOT"
+  }
+]
