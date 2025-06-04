@@ -1,0 +1,8 @@
+[
+  {
+    "label": "apl_app: Run",
+    "command": "cmake",
+    "args": ["--build build", "--target run_apl_app"],
+    "cwd": "$ZED_WORKTREE_ROOT"
+  }
+]
