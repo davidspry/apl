@@ -28,7 +28,7 @@ namespace apl::sync
 /// The FIFO capacity, required to be a power of 2 greater than 1
 template<class T, size_t N> requires (N != 1 && std::has_single_bit(N))
 class SpscFifo {
-  struct Box {
+  struct alignas(128) Box {
     alignas(T) std::byte buffer[sizeof(T)];
   };
 
