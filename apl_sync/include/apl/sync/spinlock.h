@@ -36,7 +36,7 @@ public:
 /// `--'   '   `-' `'    `--'
 
 inline void Spinlock::lock() noexcept {
-  apl::meta::wait_with_spin_backoff<8, 64, 512>([this]() {
+  apl::meta::wait_with_spin_backoff<8, 128, 512>([this]() {
     return try_lock();
   });
 }
