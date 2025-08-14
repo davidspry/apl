@@ -13,7 +13,7 @@
 namespace apl::sync
 {
 
-/// A object protected by a double-buffer mechanism supporting SPSC concurrency
+/// An object protected by a double-buffer mechanism supporting SPSC concurrency
 /// 
 /// @details
 /// Both reading and writing are wait-free.

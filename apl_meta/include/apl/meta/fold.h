@@ -45,7 +45,7 @@ constexpr void inline_for(Fn&& fn) {
   }(std::make_index_sequence<N>());
 }
 
-/// Invoke the given object N times in an unrolled loop,
+/// Invoke the given object N times in an unrolled loop
 /// and compute the sum of the results.
 /// 
 /// @details
@@ -81,7 +81,7 @@ constexpr auto inline_sum(Fn&& fn) {
   }(std::make_index_sequence<N>());
 }
 
-/// Invoke the given object N times in an unrolled loop,
+/// Invoke the given object N times in an unrolled loop
 /// and compute the logical conjunction of the results.
 /// 
 /// @details
@@ -120,7 +120,7 @@ constexpr bool inline_all(Fn&& fn) {
   }(std::make_index_sequence<N>());
 }
 
-/// Invoke the given object N times in an unrolled loop,
+/// Invoke the given object N times in an unrolled loop
 /// and compute the logical disjunction of the results.
 /// 
 /// @details
