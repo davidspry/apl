@@ -42,7 +42,7 @@ public:
 
 private:
   size_t read_index() noexcept;
-  size_t write_index() noexcept;
+  size_t write_index() const noexcept;
   void update_indices() noexcept;
 };
 
@@ -79,7 +79,7 @@ auto DoubleBuffer<T>::read_index() noexcept -> size_t {
 }
 
 template<class T>
-auto DoubleBuffer<T>::write_index() noexcept -> size_t {
+auto DoubleBuffer<T>::write_index() const noexcept -> size_t {
   return m_index.load(std::memory_order::acquire) ^ 1;
 }
 
